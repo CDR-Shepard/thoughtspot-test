@@ -7,7 +7,7 @@ import {
   EmbedEvent,
   AuthType,
   HostEvent
-} from "@thoughtspot/visual-embed-sdk";
+} from "https://cdn.jsdelivr.net/npm/@thoughtspot/visual-embed-sdk/dist/tsembed.es.js";
 import "./styles.css";
 
 // Initialize embed configuration
