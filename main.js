@@ -1,40 +1,84 @@
-// Import the LiveboardEmbed SDK
+// Import ThoughtSpot SDK
 import {
-    LiveboardEmbed,
-    AuthType,
     init,
-    EmbedEvent
-} from 'https://cdn.jsdelivr.net/npm/@thoughtspot/visual-embed-sdk/dist/tsembed.es.js';
+    LiveboardEmbed,
+    EmbedEvent,
+    AuthType
+} from "@thoughtspot/visual-embed-sdk";
 
-// Initialize the SDK
+// Initialize embed configuration
 init({
     thoughtSpotHost: "https://team1.thoughtspot.cloud",
-    authType: AuthType.None
+    authType: AuthType.None,
 });
 
-// Create an instance of the LiveboardEmbed class
-const liveboardEmbed = new LiveboardEmbed(document.getElementById('ts-embed'), {
-    frameParams: {
-        width: '100%',
-        height: '100%',
-    },
-    liveboardId: "55d08cfe-263e-4e65-a36c-f89f19cd675a",
+// Functions to show/hide elements
+function setDisplayStyle(el, style) {
+    if(document.getElementById(el)) {
+        document.getElementById(el).style.display = style;
+    }
+}
+
+function showLoader() {
+    setDisplayStyle("loader", "block");
+}
+
+function hideLoader() {
+    setDisplayStyle("loader", "none");
+}
+
+function showNoDataImage() {
+    setDisplayStyle("no-data", "block");
+}
+
+function hideNoDataImage() {
+    setDisplayStyle("no-data", "none");
+}
+
+function showErrorBanner(display, errorText = '') {
+    setDisplayStyle("errorBanner", display);
+    if(errorText) {
+        document.getElementById("errorBanner").firstElementChild.innerText = errorText;
+    }
+}
+
+function showAuthExpired() {
+    setDisplayStyle("authExpiredBanner", "flex");
+}
+
+// Instantiate class for embedding a Liveboard
+const embed = new LiveboardEmbed("#your-own-div", {
+    frameParams: {},
     fullHeight: true,
-    visibleVizs: [],
-    runtimeFilters: [
-        // Add any runtime filters you require here
-        // Example: 
-        // {
-        //     columnName: 'your_column_name',
-        //     operator: 'RuntimeFilterOp.EQUALS',
-        //     values: ['your_value']
-        // }
-    ],
+    liveboardId: "55d08cfe-263e-4e65-a36c-f89f19cd675a",
+    activeTabId: "5bd5d9ca-ea69-4120-a168-99ab0e46e1a4",
 });
 
 // Register event listeners
-liveboardEmbed.on(EmbedEvent.Init, () => console.log('Liveboard init'));
-liveboardEmbed.on(EmbedEvent.Load, () => console.log('Liveboard loaded'));
+embed
+    .on(EmbedEvent.Init, showLoader)
+    .on(EmbedEvent.Load, hideLoader)
+    .on(EmbedEvent.AuthExpire, showAuthExpired)
+    .on(EmbedEvent.Error, (error) => {
+        if(error?.data?.errorType === 'FULLSCREEN') {
+            showErrorBanner('none');
+        } else if(typeof(error.error) === 'string') {
+            showErrorBanner('flex', error.error);
+        } else {
+            showErrorBanner('flex');
+        }
+        console.log('Error', error);
+        hideLoader();
+    });
 
-// Render the embedded Liveboard
-liveboardEmbed.render();
+// Render Liveboard
+embed.render();
+
+// Event listeners for closing banners
+document.getElementById('authExpiredBannerCloseBtn').addEventListener('click', () => {
+    setDisplayStyle("authExpiredBanner", "none");
+});
+
+document.getElementById('errorBannerCloseBtn').addEventListener('click', () => {
+    setDisplayStyle("errorBanner", "none");
+});
