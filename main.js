@@ -34,4 +34,4 @@ liveboardEmbed.on(EmbedEvent.Init, () => console.log('Liveboard init'));
 liveboardEmbed.on(EmbedEvent.Load, () => console.log('Liveboard loaded'));
 
 // Render the embedded Liveboard
-liveboardEmbed.render();
+liveboardEmbed.render();    
