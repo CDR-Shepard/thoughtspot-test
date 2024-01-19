@@ -4,7 +4,7 @@ import {
     LiveboardEmbed,
     EmbedEvent,
     AuthType
-} from "@thoughtspot/visual-embed-sdk";
+} from "https://cdn.jsdelivr.net/npm/@thoughtspot/visual-embed-sdk/dist/tsembed.es.js";
 
 // Initialize embed configuration
 init({
