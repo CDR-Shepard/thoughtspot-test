@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThoughtSpot Liveboard Embed</title>
+    <title>Embed ThoughtSpot Liveboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="ts-embed"></div>
-
-    <script type="module" src="main.js"></script>
+    <div id="your-own-div"><!-- Liveboard will be embedded here --></div>
+    <div id="loader">Loading...</div>
+    <div id="no-data">No Data Available</div>
+    <div id="errorBanner">
+        <span>Error Occurred</span>
+        <button id="errorBannerCloseBtn">Close</button>
+    </div>
+    <div id="authExpiredBanner">
+        <span>Authentication Expired</span>
+        <button id="authExpiredBannerCloseBtn">Close</button>
+    </div>
+    <script type="module" src="your-script.js"></script>
 </body>
 </html>
