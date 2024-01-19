@@ -9,7 +9,7 @@ import {
 
 // Initialize the SDK
 init({
-    thoughtSpotHost: "https://[your-thoughtspot-host]",
+    thoughtSpotHost: "https://team1.thoughtspot.cloud",
     authType: AuthType.None
 });
 
