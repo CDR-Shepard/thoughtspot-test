@@ -20,6 +20,7 @@ const liveboardEmbed = new LiveboardEmbed(document.getElementById('ts-embed'), {
         height: '100%',
     },
     liveboardId: "55d08cfe-263e-4e65-a36c-f89f19cd675a",
+    activeTabId: "5bd5d9ca-ea69-4120-a168-99ab0e46e1a4",
     fullHeight: true,
     visibleVizs: [],
     runtimeFilters: [{
